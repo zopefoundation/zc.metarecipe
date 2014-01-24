@@ -40,6 +40,27 @@ def test_funky_option_types():
 
     """
 
+class Dict(dict):
+
+    def __setitem__(self, name, value):
+        print 'raw setitem', name, value
+        dict.__setitem__(self, name, value)
+
+def parse_does_raw_before_calling_getitem():
+    r"""
+    >>> import zc.metarecipe.testing
+    >>> buildout = zc.metarecipe.testing.Buildout()
+    >>> buildout._raw = Dict()
+    >>> recipe = zc.metarecipe.Recipe(buildout, '', {})
+    >>> recipe.parse("[a]\nx=1\n[b]\ny=2\n")
+    raw setitem a {'x': '1'}
+    raw setitem b {'y': '2'}
+    [a]
+    x = 1
+    [b]
+    y = 2
+    """
+
 def test_suite():
     return unittest.TestSuite((
         manuel.testing.TestSuite(

@@ -227,6 +227,11 @@ That's pretty much it.
 Changes
 =======
 
+- Fixed: When parsing configuration text, sections were input and
+         evaluated at the same time in section sorted order. This
+         caused problems if a section that sorted early referred to a
+         section that sorted late.
+
 0.2.0 (2012-09-24)
 ------------------
 
