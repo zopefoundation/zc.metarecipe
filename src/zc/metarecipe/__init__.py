@@ -20,9 +20,14 @@ class Recipe(object):
     def parse(self, data):
         parser = ConfigParser.RawConfigParser()
         parser.readfp(cStringIO.StringIO(textwrap.dedent(data)))
+        buildout = self.buildout
+        raw = buildout._raw
+        sections = sorted(parser.sections())
 
-        for section in sorted(parser.sections()):
-            self[section] = dict(parser.items(section))
+        for section in sections:
+            raw[section] = dict(parser.items(section))
+        for section in sections:
+            buildout[section]
 
 validtypes = unicode, int
 
